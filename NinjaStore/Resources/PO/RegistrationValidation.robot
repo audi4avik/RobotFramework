@@ -6,7 +6,7 @@ Resource  HeaderTopBar.robot
 
 *** Variables ***
 ${SuccessMsgLocator} =  xpath=//p[contains(text(), 'successfully created')]
-${FailureMsgLocator} =  //div[contains(@class, 'alert-danger') and contains(text(), 'E-Mail Address is already registered')]
+${FailureMsgLocator} =  xpath=//div[contains(@class, 'alert-danger') and contains(text(), 'E-Mail Address is already registered')]
 ${AlertMsg} =  xpath=//div[@class='text-danger']
 
 

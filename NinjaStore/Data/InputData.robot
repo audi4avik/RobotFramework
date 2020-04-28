@@ -1,12 +1,13 @@
 *** Settings ***
 Library  DateTime
+Library  String
 *** Variables ***
 # Configuration
 ${BROWSER} =    chrome
 ${NinjaHomeURL} =  http://tutorialsninja.com/demo/
 
 # Search Input Data
-@{SearchStr} =  imac  iphone  Galaxy Tab  D300
+@{SearchStr} =  imac  iphone  Galaxy Tab  D300  Samsung Syncmaster
 
 # User Registration/Login Data
 &{ValidUserDetails}  FirstName=John   LastName=Doe  Email=janed@gmail.com  Tel=9100012345  Pwd=AudiR8V10  CnfPwd=AudiR8V10   ValidateMsg=successfully created

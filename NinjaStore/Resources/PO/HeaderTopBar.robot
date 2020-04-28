@@ -14,9 +14,18 @@ Click On Register Dropdown
     set selenium implicit wait  2s
 
 Click On Login Dropdown
+     ${LoginSessionCheck}  run keyword and return status
+                          ...  page should contain link  ${LoginLink}
+     run keyword if  ${LoginSessionCheck} == True   Perform Login
+     ...  ELSE                                      Skip Login
+
+Perform Login
     click element  ${MyAccountLink}
     click link  ${LoginLink}
     set selenium implicit wait  2s
+
+Skip Login
+    log     User Already Logged In
 
 Click On Logout
     click element  ${MyAccountLink}

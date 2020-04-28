@@ -9,19 +9,22 @@ Resource  ./PO/UserLoginPage.robot
 Resource  ./PO/RegistrationValidation.robot
 #Resource  ./PO/MyAccountPage.robot
 Resource  ./PO/ForgotPassword.robot
+Resource  ./PO/CartPage.robot
+Resource  ./PO/CheckoutPage.robot
+Resource  ./PO/OrderSuccessPage.robot
 
 
 *** Keywords ***
 # Template High Level Keywords Section
 Search For Multiple Products
     [Arguments]  ${SearchStr}
-    Go to Landing Page
+    Go To Landing Page
     Search Product Through Searchbox  ${SearchStr}
     Verify Search Result  ${SearchStr}
 
 User Registration Steps
     [Arguments]  ${UserDetails}
-    Go to Landing Page
+    Go To Landing Page
     Click On Register
     Verify Registration Page Loaded
     Submit Personal Details  ${UserDetails}
@@ -29,7 +32,7 @@ User Registration Steps
 
 User Login Steps
     [Arguments]  ${UserDetails}
-    Go to Landing Page
+    Go To Landing Page
     Click On Login
     Verify Login Page Loaded
     Enter Login Credential  ${UserDetails}
@@ -37,13 +40,29 @@ User Login Steps
 
 Forgot Password Steps
     [Arguments]  ${UserDetails}
-    Go to Landing Page
+    Go To Landing Page
     Click On Login
     Navigate To Forgot Password
     Verify Forgot Password Functionality    ${UserDetails}
 
+Add Multiple Products To Cart
+    Go To Landing Page
+    Add Item To Cart
+    Validate Shopping Cart
+
+Checkout As Logged In User Or Guest
+    [Arguments]  ${ValidUserDetails}    ${SearchStr}
+    Go To Landing Page
+#    Click On Login
+#    Enter Login Credential  ${UserDetails}
+    Search Product Through Searchbox  ${SearchStr}
+    Add Items From Search Result
+    Proceed To Checkout
+    LoggedIn Or Guest Checkout  ${ValidUserDetails}
+
+
 # Lower Level Keywords Section
-Go to Landing Page
+Go To Landing Page
     LandingPage.Navigate To
 
 # Search Products Keywords
@@ -55,7 +74,7 @@ Search Product Through Searchbox
 Verify Search Result
     [Documentation]  Validate the result from Search
     [Arguments]  ${Credentials}
-    SearchResultPage.Validate Result    ${SearchStr}
+    SearchResultPage.Validate Result   ${Credentials}
 
 # User Registration Keywords
 Click On Register
@@ -94,3 +113,23 @@ Verify Forgot Password Functionality
     [Arguments]  ${UserDetails}
     ForgotPassword.Validate Forgot Password   ${UserDetails}
     ForgotPassword.Validate Return Message
+
+# Adding Multiple Products To Cart Keywords
+Add Item To Cart
+    LandingPage.Add Items To Shopping Cart
+
+Validate Shopping Cart
+    CartPage.Validate Cart Items
+
+# Checkout From Cart After Signing In
+Add Items From Search Result
+    SearchResultPage.Add Searched Items To Cart
+    SearchResultPage.Click On Shopping Cart Link
+
+Proceed To Checkout
+    CartPage.Click On Checkout Button
+
+LoggedIn Or Guest Checkout
+    [Arguments]  ${ValidUserDetails}
+    CheckoutPage.Check For Session  ${ValidUserDetails}
+    OrderSuccessPage.Validate Success Message

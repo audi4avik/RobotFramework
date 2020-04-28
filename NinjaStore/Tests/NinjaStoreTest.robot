@@ -1,10 +1,18 @@
 *** Settings ***
+Library  String
 Documentation   These are the test cases for NinjaStore ecommerce
-Resource  ../Data/InputData.robot  # necessary for inputs
-Resource  ../Resources/Common.robot  # necessary for Setup & Teardown
-Resource  ../Resources/NinjaStoreApp.robot  # necessary for lower level keywords in test cases
+Resource  ../Data/InputData.robot
+Resource  ../Resources/Common.robot
+Resource  ../Resources/NinjaStoreApp.robot
 Test Setup  Common.Begin Web Test
 Test Teardown  Common.End Web Test
+
+# Execution Options
+# --reporttitle "my new report"
+# --logtitle "my cool log"
+# -c <tagname>  - To mark critical test cases
+# -n <tagname>  - To mark non critical cases
+# -T to differentiate test results with timestamps
 
 *** Variables ***
 # Global variables, moved to InputData
@@ -56,8 +64,22 @@ Verify Forgot Password Scnearios
     ${InvalidUsername}
 
 Verify Functionality Adding Multiple Items To Cart
-    [Documentation]  This is test 5 for user login scenarios
+    [Documentation]  This is test 5 for adding multiple items to cart
     [Tags]  Cart
-    [Template]  Forgot Password Steps
-    ${ValidUserDetails}
-    ${InvalidUsername}
+    NinjaStoreApp.Add Multiple Products To Cart
+
+Verify Checkout Functionality As Guest User
+    [Documentation]  This is test 6 for checkout as a Guest user
+    [Tags]  CheckoutGuest
+    [Template]  NinjaStoreApp.Checkout As Logged In User Or Guest
+    ${ValidUserDetails}     @{SearchStr}[3]
+
+Verify Checkout Functionality As Logged In User
+    [Documentation]  This is test 7 for checkout as a logged in user
+    [Tags]  CheckoutLogin
+    [Template]  NinjaStoreApp.Checkout As Logged In User Or Guest
+    ${ValidUserDetails}     @{SearchStr}[4]
+
+
+
+
