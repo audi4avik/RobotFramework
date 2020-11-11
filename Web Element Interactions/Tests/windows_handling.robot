@@ -19,10 +19,11 @@ ${smallModalClose} =    id=closeSmallModal
 ${largeModal} =     id=showLargeModal
 ${largeModalClose} =    id=closeLargeModal
 
+# robot -d Results tests\windows*robot
 
 *** Test Cases ***
 Test Switch Windows
-    [Tags]    switch window
+    [Tags]    window
     Switching Windows
 
 Test Modal Handling
@@ -34,13 +35,14 @@ Test Modal Handling
 Switching Windows
     click element    ${link}
     sleep    2 seconds
+    execute javascript    window.scrollTo(0, 400)
     click element    ${windowLink}
     wait until element is visible       ${newTab}
 
-    click button    ${newTab}
+    click element    ${newTab}
+    set selenium speed    0.5
     ${windowHandles}    get window handles
 
-    set selenium speed    0.5
     switch window   ${windowHandles}[1]
     ${url}    get location
     should contain    ${url}    demoqa.com/sample
