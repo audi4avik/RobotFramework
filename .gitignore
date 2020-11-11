@@ -1,5 +1,5 @@
-debug.log
-log.html
-output.xml
-report.html
-selenium*.png
+/Web Element Interactions/Results/
+/Web Element Interactions/debug.log
+/Database Test/Results/
+/RobotDemo/results/
+
